@@ -1,13 +1,84 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary-color: #00ffd5;
+  --second-color: #ae00ff;
+  --neutral-color: rgba(0, 0, 0, .2);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.Game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(225deg, var(--primary-color) 0%, var(--second-color) 100%);
+}
+
+.Field {
+  display: flex;
+  flex-direction: column;
+  border: 30px solid transparent;
+  min-width: 500px;
+  max-width: 800px;
+  width: 50vw;
+  height: 75vh;
+  background-color: transparent;
+  box-shadow: 0 0 10px var(--neutral-color);
+  box-sizing: border-box;
+  perspective: 1500px;
+}
+
+.Field .Field__row {
+  display: flex;
+  justify-content: space-between;
+  height: calc((100% - (30px * 2)) / 4);
+}
+
+.Field .Field__row:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.Field .Field__сell {
+  width: calc(25% - 20px);
+  height: 100%;
+  position: relative;
+  background-color: var(--primary-color);
+  padding: 15px 0;
+  border: 3px solid var(--neutral-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: .5s all ease-out;
+  box-sizing: border-box;
+}
+
+.Field__сell .Cell__front-side,
+.Field__сell .Cell__back-side {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  backface-visibility: hidden;
+}
+
+.Field__сell .Cell__front-side {
+  background-color: var(--primary-color);
+  transform: rotateX(0) rotateY(180deg) rotateX(0);
+}
+
+.Field__сell .Cell__back-side {
+  background: var(--primary-color) url(https://seeklogo.com/images/R/react-styleguidst-logo-5C3D736C4B-seeklogo.com.png) center no-repeat;
+  background-size: 64px;
+}
+
+.Field .Field__сell:not(:last-child) {
+  margin-right: 20px;
+}
+
+.Field .Field__сell:hover {
+  transform: rotateX(0) rotateY(0) rotateZ(-5deg);
+}
+
+.Field .Field__сell.Field__cell_flipped {
+  cursor: not-allowed;
+  transform: rotateX(180deg) rotateY(0) rotateZ(180deg);
 }
