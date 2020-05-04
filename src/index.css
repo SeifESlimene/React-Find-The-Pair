@@ -16,13 +16,15 @@
 .Field {
   display: flex;
   flex-direction: column;
-  border: 30px solid transparent;
-  min-width: 500px;
+  padding: 26.75px;
+  min-width: 350px;
   max-width: 800px;
   width: 50vw;
+  min-height: 300px;
+  max-height: 600px;
   height: 75vh;
   background-color: transparent;
-  box-shadow: 0 0 10px var(--neutral-color);
+  box-shadow: inset 0 0 10px var(--neutral-color);
   box-sizing: border-box;
   perspective: 1500px;
 }
@@ -34,7 +36,7 @@
 }
 
 .Field .Field__row:not(:last-child) {
-  margin-bottom: 20px;
+  margin-bottom: 26.75px;
 }
 
 .Field .Field__сell {
@@ -66,19 +68,50 @@
 }
 
 .Field__сell .Cell__back-side {
-  background: var(--primary-color) url(https://seeklogo.com/images/R/react-styleguidst-logo-5C3D736C4B-seeklogo.com.png) center no-repeat;
+  background-color: var(--primary-color);
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: 64px;
+  opacity: 0;
 }
 
 .Field .Field__сell:not(:last-child) {
-  margin-right: 20px;
+  margin-right: 26.75px;
 }
 
-.Field .Field__сell:hover {
+.Field .Field__сell:hover,
+.Field .Field__сell:focus {
   transform: rotateX(0) rotateY(0) rotateZ(-5deg);
+  outline: var(--neutral-color) solid 3px;
 }
 
 .Field .Field__сell.Field__cell_flipped {
   cursor: not-allowed;
   transform: rotateX(180deg) rotateY(0) rotateZ(180deg);
+}
+
+.Field__сell .Cell__back-side {
+  animation: fadeIn .3s ease .2s forwards;
+}
+
+.Field__сell.Field__cell_flipped .Cell__back-side {
+  animation: fadeOut .3s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

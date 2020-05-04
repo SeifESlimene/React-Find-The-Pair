@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { Map } from 'core-js' // IE 11 fix
+import { Map } from 'core-js' // IE 10-11 fix
 
 import React from 'react'
 import ReactDOM from 'react-dom'

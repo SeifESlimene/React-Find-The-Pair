@@ -6,39 +6,37 @@ export default class Cell extends Component {
     this.state = {
       isTapped: false,
     };
-    this.handleClick = this.handleClick.bind(this);
+
+    /*
+    * For rename Cell's className it's needed to render again
+    * i.e call this func again, so we use: "...bind(this)".
+    */
+    this.toggleClassName = this.toggleClassName.bind(this);
   }
 
-  handleClick = () => {
-    if (!this.state.isTapped) {
-      this.setState({
-        isTapped: true
-      });
-    }
-  } 
+  // Func for flip card.
+  toggleClassName() {
+    this.setState(state => ({
+      isTapped: !state.isTapped
+    }));
+  }
 
   render () {
-    return (
-      <CellChild
-        className={this.state.isTapped ? 'Field__сell Field__cell_flipped' : 'Field__сell'}
-        toggleClassName={this.handleClick}
-      >
-        <div className='Cell__front-side'></div>
-        <div className='Cell__back-side'></div>
-      </CellChild>
-    )
-  }
-}
+    // Importing this state into render() to className which has to read value of the state.
+    const { isTapped } = this.state;
 
-class CellChild extends Component {
-  render() {
     return (
       <div
-        className={this.props.className}
-        onClick={this.props.toggleClassName}
+        onClick={() => {
+          this.toggleClassName()
+          this.props.onClick()
+        }}
+        // There is our imported state.
+        className={`Field__сell${isTapped ? ' Field__cell_flipped' : ''}`}
       >
-        {this.props.children}
+        <div className='Cell__front-side'></div>
+        <div className='Cell__back-side' style={{backgroundImage: 'url(react-back-logo.png)'}}></div>
       </div>
-    )    
+    )
   }
 }
