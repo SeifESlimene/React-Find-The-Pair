@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-export default class Cell extends Component {
+class Cell extends Component {
   constructor(props) {
     super(props);
+    /*
+    * For rename Cell's className it's needed to
+    * call this func again, so we use: "...bind(this)".
+    */
+    this.toggleClassName = this.toggleClassName.bind(this);
+
     this.state = {
       isTapped: false,
     };
-
-    /*
-    * For rename Cell's className it's needed to render again
-    * i.e call this func again, so we use: "...bind(this)".
-    */
-    this.toggleClassName = this.toggleClassName.bind(this);
   }
 
   // Func for flip card.
@@ -27,12 +28,12 @@ export default class Cell extends Component {
 
     return (
       <div
+        // There is our imported state.
+        className={`Field__сell${isTapped ? ' Field__cell_flipped' : ''}`}
         onClick={() => {
           this.toggleClassName()
           this.props.onClick()
         }}
-        // There is our imported state.
-        className={`Field__сell${isTapped ? ' Field__cell_flipped' : ''}`}
       >
         <div className='Cell__front-side'></div>
         <div className='Cell__back-side' style={{backgroundImage: 'url(react-back-logo.png)'}}></div>
@@ -40,3 +41,10 @@ export default class Cell extends Component {
     )
   }
 }
+
+Cell.propTypes = {
+  onClick: PropTypes.func,
+  pair: PropTypes.number.isRequired,
+}
+
+export default Cell;

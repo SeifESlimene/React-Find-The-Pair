@@ -3,9 +3,10 @@ import { Map } from 'core-js' // IE 10-11 fix
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 
 import 'reset-css'
 import './index.css'
+
+import App from './App'
 
 ReactDOM.render(<App/>, document.getElementById('root'))

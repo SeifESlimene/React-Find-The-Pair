@@ -1,55 +1,28 @@
 import React, { Component } from 'react'
 import Cell from './Cell'
 
-export default class Field extends Component {
+class Field extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cells: Array(16).fill(null),
     };
-    // this.handleClick = this.handleClick.bind(this);
   }
   
-  // It's already prepared, in advance, function for use to shuffle cards when page loaded.
-  shuffleCells = (array) => {
-    let
-      currentIndex = array.length,
-      temporaryValue,
-      randomIndex
-  
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex -= 1
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex]
-      array[currentIndex] = array[randomIndex]
-      array[randomIndex] = temporaryValue;
-    }
-    return array
-  };
 
-  handleClick = () => {
-    // const cells = this.state.cells.slice();
-    // cells[i_arr] = 'X'
-    // this.setState({ cells: cells })
-    // console.log(cells[i_arr])
-    console.log(123)
+  handleClick = (i, j) => {
+    console.log(i, j)
   }
 
-  renderCell = (i_pair, i_arr) => {
+  renderCell = (indexPair, indexArr) => {
     return (
       <Cell
-        value={i_pair}
-        key={i_arr}
+        pair={indexPair}
+        key={indexArr}
         onClick={() => {
-          this.handleClick();
+          this.handleClick(indexPair, indexArr);
         }}
-      >
-        {/* {this.state.cells[i_arr]} */}
-      </Cell>
+      />
     )
   }
 
@@ -84,3 +57,27 @@ export default class Field extends Component {
     )
   }
 }
+
+
+  // It's already prepared, in advance, function for use to shuffle cards when page loaded.
+  // shuffleCells = (array) => {
+  //   let
+  //     currentIndex = array.length,
+  //     temporaryValue,
+  //     randomIndex
+  
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex)
+  //     currentIndex -= 1
+  
+  //     // And swap it with the current element.
+  //     temporaryValue = array[currentIndex]
+  //     array[currentIndex] = array[randomIndex]
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //   return array
+  // };
+
+export default Field;
