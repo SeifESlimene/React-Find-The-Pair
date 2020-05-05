@@ -57,7 +57,11 @@ class Field extends Component {
       cells = this.state.cells,
       children = this.state.cells.children
     
-    // TODO: Check out it on bugs...
+    /*
+    * TODO:
+    * - Check out it on bugs...
+    * - Style card when it flipped
+    */
     if ((cells.Open[0].indexPair === cells.Open[1].indexPair) &&
         (cells.Open[0].indexArray !== cells.Open[1].indexArray)) {
       cells.children[cells.Open[0].indexArray].done = true
