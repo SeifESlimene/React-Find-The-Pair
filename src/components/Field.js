@@ -132,7 +132,7 @@ class Field extends Component {
         if (Open[0].indexArray === Open[1].indexArray) {
           Open.shift()
         } else {
-          setTimeout(() => this.check(), 1000)
+          setTimeout(() => this.check(), 200)
         }
       }
     }
@@ -140,7 +140,7 @@ class Field extends Component {
 
   check = () => {
     const { cells: { Open, children } } = this.state
-    
+
     if (Open[0] && Open[1]) {
       if (Open[0].indexPair === Open[1].indexPair) {
         children[Open[0].indexArray].done = true
@@ -157,6 +157,16 @@ class Field extends Component {
         Open: []
       }
     })
+
+    const state = children.every((item) => item.done)
+
+    if (state) {
+      // eslint-disable-next-line no-restricted-globals
+      let ask = confirm('Do you want to restart the game?')
+      if (ask) {
+        window.location.reload()
+      }
+    }
   }
 
   render() {
