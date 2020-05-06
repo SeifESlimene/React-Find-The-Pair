@@ -1,3 +1,5 @@
+
+// TODO: Set some variables into global scope
 import React, { Component } from 'react'
 import Cell from './Cell'
 
@@ -62,6 +64,10 @@ class Field extends Component {
     return array
   }
 
+  /*
+   * There are cannot be default values of close and done vars
+   * Because every cell will work wrong
+   */
   renderCell = (indexPair, indexArray, close, done) => {
     return (
       <Cell
@@ -108,7 +114,6 @@ class Field extends Component {
   }
 
   handleClick = (indexArray, indexPair) => {
-    // TODO: Set these first 3 consts into the global scope
     const
       cells = this.state.cells,
       open = cells.Open,
