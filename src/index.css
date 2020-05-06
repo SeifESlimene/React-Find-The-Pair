@@ -80,6 +80,7 @@
   margin-right: 26.75px;
 }
 
+/* FIXME: IE10, IE11 - when cell flipped it's not accessable to view on it */
 .Field .Field__сell:not(.Field__cell_flipped):not(.Field__сell_done):hover,
 .Field .Field__сell:not(.Field__cell_flipped):not(.Field__сell_done):focus {
   transform: rotateX(0) rotateY(0) rotateZ(-5deg);
