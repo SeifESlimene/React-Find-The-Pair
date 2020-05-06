@@ -140,8 +140,7 @@ class Field extends Component {
 
   check = () => {
     const { cells: { Open, children } } = this.state
-
-    // TODO: Style card when it flipped
+    
     if (Open[0] && Open[1]) {
       if (Open[0].indexPair === Open[1].indexPair) {
         children[Open[0].indexArray].done = true
