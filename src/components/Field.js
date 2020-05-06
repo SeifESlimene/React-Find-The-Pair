@@ -14,14 +14,16 @@ class Field extends Component {
         Open: [],
 
         children: [],
-      }
+
+        background: ['bf392b', '9b59b6', '2980b9', '119479', '7ef4b0', 'f1c40f', 'ffffff', '000000']
+      },
     }
 
     this.initGame()
   }
 
   initGame = () => {
-    let { cells: { Init, Dupe, Rand, children } } = this.state
+    let { cells: { Init, Dupe, Rand, children, background } } = this.state
 
     Dupe = Init.concat(Init) // Duplicating inited array (for pairs)
     Rand = this.shuffleCells(Dupe) // Randomizing it by shuffleCells func
@@ -33,6 +35,7 @@ class Field extends Component {
         pair,
         close: true,
         done: false,
+        background: background[pair]
       })
     })
   }
@@ -61,15 +64,16 @@ class Field extends Component {
    * There are cannot be default values of close and done vars
    * Because every cell will work wrong
    */
-  renderCell = (indexPair, indexArray, close, done) => {
+  renderCell = (indexPair, indexArray, close, done, background) => {
     return (
       <Cell
         pair={indexPair}
         key={indexArray}
         close={close}
         done={done}
+        background={'#' + background}
         onClick={() => this.handleClick(indexArray, indexPair)}
-      />
+      >{indexPair}</Cell>
     )
   }
 
@@ -89,10 +93,10 @@ class Field extends Component {
         rows.push(<div className='Field__row' key={`Row_${j}`}>
           {[ // In count of 4
             // FIXME: Automatically set count of renderCells in the row by lineLength
-            this.renderCell(children[j].pair, j, children[j].close, children[j].done),
-            this.renderCell(children[j + 1].pair, j + 1, children[j + 1].close, children[j + 1].done),
-            this.renderCell(children[j + 2].pair, j + 2, children[j + 2].close, children[j + 2].done),
-            this.renderCell(children[j + 3].pair, j + 3, children[j + 3].close, children[j + 3].done),
+            this.renderCell(children[j].pair, j, children[j].close, children[j].done, children[j].background),
+            this.renderCell(children[j + 1].pair, j + 1, children[j + 1].close, children[j + 1].done, children[j + 1].background),
+            this.renderCell(children[j + 2].pair, j + 2, children[j + 2].close, children[j + 2].done, children[j + 2].background),
+            this.renderCell(children[j + 3].pair, j + 3, children[j + 3].close, children[j + 3].done, children[j + 3].background),
           ]}
         </div>)
       }

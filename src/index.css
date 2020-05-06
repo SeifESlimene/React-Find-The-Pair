@@ -59,11 +59,12 @@
   height: 100%;
   position: absolute;
   top: 0;
+  border-radius: inherit;
+  transition: .25s all ease-in;
   backface-visibility: hidden;
 }
 
 .Field__сell .Cell__front-side {
-  background-color: var(--primary-color);
   transform: rotateX(0) rotateY(180deg) rotateX(0);
 }
 
@@ -79,15 +80,34 @@
   margin-right: 26.75px;
 }
 
-.Field .Field__сell:hover,
-.Field .Field__сell:focus {
+.Field .Field__сell:not(.Field__cell_flipped):not(.Field__сell_done):hover,
+.Field .Field__сell:not(.Field__cell_flipped):not(.Field__сell_done):focus {
   transform: rotateX(0) rotateY(0) rotateZ(-5deg);
   outline: var(--neutral-color) solid 3px;
 }
 
-.Field .Field__сell.Field__cell_flipped {
+.Field .Field__сell.Field__cell_flipped,
+.Field .Field__сell.Field__cell_done {
+  border-width: 0;
+  background: none;
   cursor: not-allowed;
   transform: rotateX(180deg) rotateY(0) rotateZ(180deg);
+}
+
+.Field .Field__сell.Field__cell_done {
+  transform: rotateX(180deg) rotateY(0) rotateZ(180deg) scale(.95);
+  transition: 1s all ease;
+}
+
+.Field__сell.Field__cell_done,
+.Field__сell.Field__cell_done .Cell__back-side {
+  background: none;
+}
+
+.Field__сell.Field__cell_done .Cell__front-side,
+.Field__сell.Field__cell_done .Cell__back-side {
+  opacity: .25;
+  /* animation: disable .3s ease forwards; */
 }
 
 .Field__сell .Cell__back-side {
@@ -113,5 +133,14 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes disable {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: .4;
   }
 }
