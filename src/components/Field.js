@@ -124,7 +124,7 @@ class Field extends Component {
         indexArray
       }
 
-    // TODO: Add comments here
+    // TODO: Add comments here and lower
     if (!(cells.Open.length === 2)) {
       if (!children[indexArray].done && children[indexArray].close) {
         children[indexArray].close = false
