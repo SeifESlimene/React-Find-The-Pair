@@ -96,7 +96,7 @@ class Field extends Component {
         // In their own row
         rows.push(<div className='Field__row' key={`Row_${j}`}>
           {[ // In count of 4
-            // FIXME: Automaticly set count of renderCells in the row by lineLength
+            // FIXME: Automatically set count of renderCells in the row by lineLength
             this.renderCell(children[j].pair, j, children[j].close, children[j].done),
             this.renderCell(children[j + 1].pair, j + 1, children[j + 1].close, children[j + 1].done),
             this.renderCell(children[j + 2].pair, j + 2, children[j + 2].close, children[j + 2].done),
