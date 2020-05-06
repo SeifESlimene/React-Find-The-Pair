@@ -108,7 +108,7 @@ class Field extends Component {
       // Then all line with their cells pushed into Field (parent) 
       field.push(<div className='Field' key={`Field_${i}`}>{rows}</div>)
 
-      // Returned last updated and pushed 
+      // Returned last updated and pushed status of field
       return field
     }
   }
