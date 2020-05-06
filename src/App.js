@@ -5,10 +5,10 @@ class App extends Component {
   render() {
     return (
       <div className='Game'>
-        <Field/>
+        <Field />
       </div>
     )
   }
 }
 
-export default App;
+export default App

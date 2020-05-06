@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class Cell extends Component {
-  constructor(props) {
-    super(props)
-    /*
-    * For rename Cell's className it's needed to
-    * call this func again, so we use: "...bind(this)".
-    */
-    // this.toggleClassName = this.toggleClassName.bind(this)
+  // constructor(props) {
+  //   super(props)
+  //   /*
+  //   * For rename Cell's className it's needed to
+  //   * call this func again, so we use: "...bind(this)".
+  //   */
+  //   // this.toggleClassName = this.toggleClassName.bind(this)
 
-    this.state = {
-      isTapped: false,
-    }
-  }
+  //   this.state = {
+  //     isTapped: false,
+  //   }
+  // }
 
   // Func for flip card.
   // toggleClassName() {
@@ -22,9 +22,9 @@ class Cell extends Component {
   //   }))
   // }
 
-  render () {
-    // Importing this state into render() to className which has to read value of the state.
-    const { isTapped } = this.state
+  render() {
+    // // Importing this state into render() to className which has to read value of the state.
+    // const { isTapped } = this.state
 
     return (
       <div
@@ -36,7 +36,7 @@ class Cell extends Component {
         }}
       >
         <div className='Cell__front-side'></div>
-        <div className='Cell__back-side' style={{backgroundImage: 'url(react-back-logo.png)'}}></div>
+        <div className='Cell__back-side' style={{ backgroundImage: 'url(react-back-logo.png)' }}></div>
       </div>
     )
   }

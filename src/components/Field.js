@@ -7,11 +7,11 @@ class Field extends Component {
 
     this.state = {
       cells: {
-        Init:     [...Array(8).keys()],
-        Dupe:     [],
-        Rand:     [],
+        Init: [...Array(8).keys()],
+        Dupe: [],
+        Rand: [],
 
-        Open:     [],
+        Open: [],
 
         children: [],
       }
@@ -20,76 +20,14 @@ class Field extends Component {
     this.initGame()
   }
 
-  handleClick = (indexArray, indexPair) => {
-    const
-      cells = this.state.cells,
-
-      currentCell = {
-        indexPair,
-        indexArray
-      }
-    
-    // TODO: Remove this condition
-    if (cells.Open.length === 2)
-      return null
-    else {
-      cells.children[indexArray].close = false
-      console.log(currentCell)
-      // TODO: Not same index array
-      cells.Open.push(currentCell)
-
-      console.log(cells.Open)
-
-      this.setState({
-        cells: {
-          ...this.state.cells,
-          children: cells.children,
-        }
-      })
-
-      if (cells.Open.length === 2)
-        setTimeout(() => this.check(), 1000)
-    }
-  }
-
-  check = () => {
-    const
-      cells = this.state.cells,
-      children = this.state.cells.children
-    
-    /*
-    * TODO:
-    * - Check out it on bugs...
-    * - Style card when it flipped
-    */
-    if ((cells.Open[0].indexPair === cells.Open[1].indexPair) &&
-        (cells.Open[0].indexArray !== cells.Open[1].indexArray)) {
-      cells.children[cells.Open[0].indexArray].done = true
-      cells.children[cells.Open[1].indexArray].done = true
-    } else if (cells.Open[0].indexArray === cells.Open[1].indexArray) {
-      cells.children[cells.Open[0].indexArray].close = false
-      cells.children[cells.Open[1].indexArray].close = false
-    } else {
-      cells.children[cells.Open[0].indexArray].close = true
-      cells.children[cells.Open[1].indexArray].close = true
-    }
-
-    this.setState({
-      cells: {
-        ...this.state.cells,
-        Open: []
-      }
-    })
-  }
-
   initGame = () => {
     // Shortcut
-    const cells  = this.state.cells
+    const cells = this.state.cells
 
     let children = []
 
-    cells.Dupe   = cells.Init.concat(cells.Init) // Duplicating inited array (for pairs)
-    cells.Rand   = this.shuffleCells(cells.Dupe) // Randomizing it by shuffleCells func
+    cells.Dupe = cells.Init.concat(cells.Init) // Duplicating inited array (for pairs)
+    cells.Rand = this.shuffleCells(cells.Dupe) // Randomizing it by shuffleCells func
     cells.Rand = cells.Dupe
 
     // Putting default info in each child of already randomized cells
@@ -109,17 +47,17 @@ class Field extends Component {
       currentIndex = array.length,
       temporaryValue,
       randomIndex
-  
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
       // Pick a remaining element...
-      randomIndex   = Math.floor(Math.random() * currentIndex)
+      randomIndex = Math.floor(Math.random() * currentIndex)
       currentIndex -= 1
-  
+
       // And swap it with the current element.
-      temporaryValue      = array[currentIndex]
+      temporaryValue = array[currentIndex]
       array[currentIndex] = array[randomIndex]
-      array[randomIndex]  = temporaryValue
+      array[randomIndex] = temporaryValue
     }
     return array
   }
@@ -138,7 +76,7 @@ class Field extends Component {
 
   renderField = () => {
     const
-      children   = this.state.cells.children, // Shortcut
+      children = this.state.cells.children, // Shortcut
       lineLength = 4 // Count of cells in 1 line
 
     let field = []
@@ -159,13 +97,77 @@ class Field extends Component {
           ]}
         </div>)
       }
-      
+
       // Then all line with their cells pushed into Field (parent) 
       field.push(<div className='Field' key={`Field_${i}`}>{rows}</div>)
 
       // Returned last updated and pushed 
       return field
     }
+  }
+
+  handleClick = (indexArray, indexPair) => {
+    // TODO: Set these first 3 consts into the global scope
+    const
+      cells = this.state.cells,
+      open = cells.Open,
+      children = cells.children,
+
+      currentCell = {
+        indexPair,
+        indexArray
+      }
+
+    // TODO: Add comments here
+    if (!(cells.Open.length === 2)) {
+      if (!children[indexArray].done && children[indexArray].close) {
+        children[indexArray].close = false
+        open.push(currentCell)
+      }
+
+      this.setState({
+        cells: {
+          ...this.state.cells,
+          children: cells.children,
+        }
+      })
+
+      if (open && (open.length === 2)) {
+        if (open[0].indexArray === open[1].indexArray) {
+          open.shift()
+        } else {
+          setTimeout(() => {
+              this.check()
+            }, 1000
+          )
+        }
+      }
+    }
+  }
+
+  check = () => {
+    const
+      cells = this.state.cells,
+      open = cells.Open,
+      children = cells.children
+
+    // TODO: Style card when it flipped
+    if (open[0] && open[1]) {
+      if (open[0].indexPair === open[1].indexPair) {
+        children[open[0].indexArray].done = true
+        children[open[1].indexArray].done = true
+      } else {
+        children[open[0].indexArray].close = true
+        children[open[1].indexArray].close = true
+      }
+    }
+
+    this.setState({
+      cells: {
+        ...this.state.cells,
+        Open: []
+      }
+    })
   }
 
   render() {
