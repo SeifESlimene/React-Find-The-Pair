@@ -132,7 +132,7 @@ class Field extends Component {
         if (Open[0].indexArray === Open[1].indexArray) {
           Open.shift()
         } else {
-          setTimeout(() => this.check(), 200)
+          setTimeout(() => this.check(), 1000)
         }
       }
     }
