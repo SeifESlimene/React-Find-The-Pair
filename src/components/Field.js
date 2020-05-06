@@ -1,5 +1,3 @@
-
-// TODO: Set some variables into global scope
 import React, { Component } from 'react'
 import Cell from './Cell'
 
@@ -23,25 +21,20 @@ class Field extends Component {
   }
 
   initGame = () => {
-    // Shortcut
-    const cells = this.state.cells
+    let { cells: { Init, Dupe, Rand, children } } = this.state
 
-    let children = []
-
-    cells.Dupe = cells.Init.concat(cells.Init) // Duplicating inited array (for pairs)
-    cells.Rand = this.shuffleCells(cells.Dupe) // Randomizing it by shuffleCells func
-    cells.Rand = cells.Dupe
+    Dupe = Init.concat(Init) // Duplicating inited array (for pairs)
+    Rand = this.shuffleCells(Dupe) // Randomizing it by shuffleCells func
+    Rand = Dupe
 
     // Putting default info in each child of already randomized cells
-    cells.Rand.map((pair, index) => {
+    Rand.map((pair) => {
       return children.push({
         pair,
         close: true,
         done: false,
       })
     })
-
-    cells.children = children
   }
 
   shuffleCells = (array) => {
@@ -82,10 +75,9 @@ class Field extends Component {
 
   renderField = () => {
     const
-      children = this.state.cells.children, // Shortcut
-      lineLength = 4 // Count of cells in 1 line
-
-    let field = []
+      { cells: { children } } = this.state,
+      lineLength = 4, // Count of cells in 1 line
+      field = []
 
     // Every line...
     for (let i = 0; i < lineLength; i++) {
@@ -115,56 +107,44 @@ class Field extends Component {
 
   handleClick = (indexArray, indexPair) => {
     const
-      cells = this.state.cells,
-      open = cells.Open,
-      children = cells.children,
-
-      currentCell = {
-        indexPair,
-        indexArray
-      }
+      { cells: { Open, children } } = this.state,
+      currentCell = { indexPair, indexArray }
 
     // TODO: Add comments here and lower
-    if (!(cells.Open.length === 2)) {
+    if (!(Open.length === 2)) {
       if (!children[indexArray].done && children[indexArray].close) {
         children[indexArray].close = false
-        open.push(currentCell)
+        Open.push(currentCell)
       }
 
       this.setState({
         cells: {
           ...this.state.cells,
-          children: cells.children,
+          children: children,
         }
       })
 
-      if (open && (open.length === 2)) {
-        if (open[0].indexArray === open[1].indexArray) {
-          open.shift()
+      if (Open && (Open.length === 2)) {
+        if (Open[0].indexArray === Open[1].indexArray) {
+          Open.shift()
         } else {
-          setTimeout(() => {
-              this.check()
-            }, 1000
-          )
+          setTimeout(() => this.check(), 1000)
         }
       }
     }
   }
 
   check = () => {
-    const
-      cells = this.state.cells,
-      open = cells.Open,
-      children = cells.children
+    const { cells: { Open, children } } = this.state
 
     // TODO: Style card when it flipped
-    if (open[0] && open[1]) {
-      if (open[0].indexPair === open[1].indexPair) {
-        children[open[0].indexArray].done = true
-        children[open[1].indexArray].done = true
+    if (Open[0] && Open[1]) {
+      if (Open[0].indexPair === Open[1].indexPair) {
+        children[Open[0].indexArray].done = true
+        children[Open[1].indexArray].done = true
       } else {
-        children[open[0].indexArray].close = true
-        children[open[1].indexArray].close = true
+        children[Open[0].indexArray].close = true
+        children[Open[1].indexArray].close = true
       }
     }
 
