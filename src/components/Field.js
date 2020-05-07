@@ -14,8 +14,17 @@ class Field extends Component {
         Open: [],
 
         children: [],
-
-        background: ['bf392b', '9b59b6', '2980b9', '119479', '7ef4b0', 'f1c40f', 'ffffff', '000000']
+        lineLength: 4, // Count of cells in 1 line
+        background: [
+          'bf392b',
+          '9b59b6',
+          '2980b9',
+          '119479',
+          '7ef4b0',
+          'f1c40f',
+          'ffffff',
+          '000000'
+        ]
       },
     }
 
@@ -73,40 +82,31 @@ class Field extends Component {
         done={done}
         background={'#' + background}
         onClick={() => this.handleClick(indexArray, indexPair)}
-      >{indexPair}</Cell>
+      />
     )
   }
 
+  // TODO: Add comments here and lower
   renderField = () => {
     const
-      { cells: { children } } = this.state,
-      lineLength = 4, // Count of cells in 1 line
-      field = []
+      { cells: { children, lineLength } } = this.state,
+      cells = []
 
-    // Every line...
-    for (let i = 0; i < lineLength; i++) {
-      let rows = []
+    let
+      field,
+      rows = []
 
-      // Cells are created... 
-      for (let j = 0; j < children.length; j += lineLength) {
-        // In their own row
-        rows.push(<div className='Field__row' key={`Row_${j}`}>
-          {[ // In count of 4
-            // FIXME: Automatically set count of renderCells in the row by lineLength
-            this.renderCell(children[j].pair, j, children[j].close, children[j].done, children[j].background),
-            this.renderCell(children[j + 1].pair, j + 1, children[j + 1].close, children[j + 1].done, children[j + 1].background),
-            this.renderCell(children[j + 2].pair, j + 2, children[j + 2].close, children[j + 2].done, children[j + 2].background),
-            this.renderCell(children[j + 3].pair, j + 3, children[j + 3].close, children[j + 3].done, children[j + 3].background),
-          ]}
-        </div>)
+    children.map((item, index) => {
+      cells.push(this.renderCell(item.pair, index, item.close, item.done, item.background))
+      if (cells.length === lineLength) {
+        rows.push(<div className='Field__row' key={`Row_${index}`}>{cells.splice(0, lineLength)}</div>);
       }
 
       // Then all line with their cells pushed into Field (parent) 
-      field.push(<div className='Field' key={`Field_${i}`}>{rows}</div>)
+      return field = <div className='Field' key={`Field_${index}`}>{rows}</div>
+    })
 
-      // Returned last updated and pushed status of field
-      return field
-    }
+    return field
   }
 
   handleClick = (indexArray, indexPair) => {
@@ -114,7 +114,6 @@ class Field extends Component {
       { cells: { Open, children } } = this.state,
       currentCell = { indexPair, indexArray }
 
-    // TODO: Add comments here and lower
     if (!(Open.length === 2)) {
       if (!children[indexArray].done && children[indexArray].close) {
         children[indexArray].close = false
