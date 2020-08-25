@@ -1,4 +1,4 @@
-[Live Demo](https://ighosta9.github.io/React-Find-The-Pair)
+[Live Demo](https://kolyandev.github.io/React-Find-The-Pair)
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
